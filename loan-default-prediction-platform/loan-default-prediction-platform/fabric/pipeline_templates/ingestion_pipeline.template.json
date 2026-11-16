@@ -1,0 +1,37 @@
+{
+  "name": "pl_sba_7a_ingest_and_curate_TEMPLATE",
+  "description": "Design template only: replace workspace item references, linked services, file paths and activity settings in Fabric UI.",
+  "activities": [
+    {
+      "name": "Copy_SBA_7a_to_OneLake_Bronze",
+      "type": "Copy",
+      "dependsOn": [],
+      "note": "Configure source CSV and Lakehouse Files/raw destination using a Fabric Copy activity."
+    },
+    {
+      "name": "Run_Bronze_to_Silver_Notebook",
+      "type": "Notebook",
+      "dependsOn": [
+        "Copy_SBA_7a_to_OneLake_Bronze"
+      ],
+      "note": "Select notebook 01_bronze_to_silver and attached Lakehouse."
+    },
+    {
+      "name": "Run_Silver_to_Gold_Notebook",
+      "type": "Notebook",
+      "dependsOn": [
+        "Run_Bronze_to_Silver_Notebook"
+      ],
+      "note": "Select notebook 02_silver_to_gold."
+    },
+    {
+      "name": "Run_Model_Training_Notebook",
+      "type": "Notebook",
+      "dependsOn": [
+        "Run_Silver_to_Gold_Notebook"
+      ],
+      "note": "Select notebook 03_train_and_register; configure schedule and MLflow."
+    }
+  ],
+  "deployment_note": "This is a human-readable pipeline design template, not a directly importable Fabric pipeline definition. Create activities in Fabric and bind actual item IDs and connections."
+}
